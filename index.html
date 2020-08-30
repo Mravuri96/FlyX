@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+    <meta name="description" content="Flight Booking App" />
+
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="FlyX" />
+    <link rel="apple-touch-icon" href="icons/Icon-192.png" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png" />
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+
+    <title>FlyX</title>
+    <link rel="manifest" href="manifest.json" />
+  </head>
+
+  <body style="background-color: #333333">
+    <noscript>Please enable JavaScript!</noscript>
+    <div class="sk-cube-grid">
+      <div class="sk-cube sk-cube1"></div>
+      <div class="sk-cube sk-cube2"></div>
+      <div class="sk-cube sk-cube3"></div>
+      <div class="sk-cube sk-cube4"></div>
+      <div class="sk-cube sk-cube5"></div>
+      <div class="sk-cube sk-cube6"></div>
+      <div class="sk-cube sk-cube7"></div>
+      <div class="sk-cube sk-cube8"></div>
+      <div class="sk-cube sk-cube9"></div>
+    </div>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script> -->
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyCcqGJ4Fn6NZzt2Ymppsn2Kf1x4rODnKaQ",
+        authDomain: "flyx-1551400318222.firebaseapp.com",
+        databaseURL: "https://flyx-1551400318222.firebaseio.com",
+        projectId: "flyx-1551400318222",
+        storageBucket: "flyx-1551400318222.appspot.com",
+        messagingSenderId: "882535873724",
+        appId: "1:882535873724:web:67b8f01562bc5e69b9e4b9",
+        measurementId: "G-KLSPDCM98D",
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      // firebase.analytics();
+    </script>
+
+    <!-- This script installs service_worker.js to provide PWA functionality to
+       application. For more information, see:
+       https://developers.google.com/web/fundamentals/primers/service-workers -->
+    <script>
+      function _beginServiceWorkerUpdateFlow(registration) {
+        if (
+          window.confirm("New version of this app is available. Refresh now?") &&
+          registration.waiting
+        ) {
+          // let waiting Service Worker know it should become active
+          registration.waiting.postMessage("skipWaiting");
+        }
+      }
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("flutter_service_worker.js").then(
+            function (registration) {
+              if (registration.waiting) {
+                _beginServiceWorkerUpdateFlow(registration);
+              }
+              // detect Service Worker update available and wait for it to become installed
+              registration.addEventListener("updatefound", () => {
+                if (registration.installing) {
+                  // wait until the new Service worker is actually installed
+                  registration.installing.addEventListener(
+                    "statechange",
+                    () => {
+                      if (registration.waiting) {
+                        // if there's an existing (Service Worker) installed , show the prompt
+                        if (navigator.serviceWorker.controller) {
+                          _beginServiceWorkerUpdateFlow(registration);
+                        } else {
+                          // otherwise it's the first install, nothing to do
+                          console.log(
+                            "Service Worker initialized for the first time"
+                          );
+                        }
+                      }
+                    }
+                  );
+                }
+              });
+
+              let refreshing = false;
+
+              // detect controller change and refresh the page
+              navigator.serviceWorker.addEventListener(
+                "controllerchange",
+                () => {
+                  if (!refreshing) {
+                    window.location.reload(true);
+                    refreshing = true;
+                  }
+                }
+              );
+            },
+            function (err) {
+              // registration failed :(
+              console.log("ServiceWorker registration failed: ", err);
+            }
+          );
+        });
+      }
+    </script>
+    <script src="main.dart.js" type="application/javascript"></script>
+  </body>
+</html>
